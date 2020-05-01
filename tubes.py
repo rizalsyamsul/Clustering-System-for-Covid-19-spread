@@ -5,7 +5,6 @@ Created on Tue Apr 27 13:18:36 2020
 @author: Sam
 """
 
-import numpy
 import random
 import matplotlib.pyplot as plt
 
@@ -24,7 +23,7 @@ def plot(x1,x2,x3,y1,y2,y3,inf,sembuh,day):
   if day == 1:
     plt.title('Hari ke-'+str(day)+'     Terinfeksi = '+str(inf))
   elif day>1:
-    plt.title('Hari ke-'+str(day)+'     Terinfeksi = '+str(inf)+'     sembuh = '+str(sembuh))
+    plt.title('Hari ke-'+str(day)+'     Terinfeksi = '+str(inf)+'     Sembuh = '+str(sembuh))
 
   plt.legend(loc='upper center', bbox_to_anchor=(0.5, -0.05))
   plt.show()
@@ -99,24 +98,6 @@ while Nterinfeksi>0:
     y.append([])
     
     for j in range(individu): 
-        
-        if (kesehatan[j] == 1):
-            if (waktu_infeksi[j] <=waktupulih):
-              waktu_infeksi[j] +=1
-            elif (waktu_infeksi[j] >waktupulih): 
-              sembuh +=1
-              imun_stat[j] = 1
-              kesehatan[j] = 0
-              Nterinfeksi -= 1
-              x_recover.append(x[i][j])
-              y_recover.append(y[i][j])
-              i_recover.append(j)
-              temp = i_infec.index(j)
-              del i_infec[temp]
-              del x_infec[temp]
-              del y_infec[temp]
-
-        
         x_now = x[i][j]
         y_now = y[i][j]
 
@@ -158,7 +139,22 @@ while Nterinfeksi>0:
                   y[i+1].append(y_now+1)
                   x[i+1].append(x_now)
                  
-        
+        if (kesehatan[j] == 1):
+            if (waktu_infeksi[j] <=waktupulih):
+              waktu_infeksi[j] +=1
+            elif (waktu_infeksi[j] > waktupulih): 
+              sembuh +=1
+              imun_stat[j] = 1
+              kesehatan[j] = 0
+              Nterinfeksi -= 1
+              x_recover.append(x[i][j])
+              y_recover.append(y[i][j])
+              i_recover.append(j)
+              temp = i_infec.index(j)
+              del i_infec[temp]
+              del x_infec[temp]
+              del y_infec[temp]
+
         for k in i_recover: 
           if (k == j):
               temp = i_recover.index(k)
@@ -180,13 +176,13 @@ while Nterinfeksi>0:
               x_infec.append(x[i][j])
               y_infec.append(y[i][j])
               i_infec.append(j)
+              kesehatan[j] = 1
+              Nterinfeksi+=1
+              jumlahsakit += 1
               temp = i_sehat.index(j)
               del i_sehat[temp]
               del x_sehat[temp]
               del y_sehat[temp]
-              kesehatan[j] = 1
-              Nterinfeksi+=1
-              jumlahsakit += 1
 
     i+=1
     hari = i
