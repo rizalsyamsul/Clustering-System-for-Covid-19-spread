@@ -4,9 +4,10 @@ Created on Tue Apr 27 13:18:36 2020
 
 @author: Sam
 """
-import numpy
+import numpy as np
 import random
 import matplotlib.pyplot as plt
+import matplotlib.animation as animation
 
 def plot(x1,x2,x3,y1,y2,y3,inf,sembuh,day):
   x = (x1, x2, x3)
@@ -27,12 +28,18 @@ def plot(x1,x2,x3,y1,y2,y3,inf,sembuh,day):
 
   plt.legend(loc='upper center', bbox_to_anchor=(0.5, -0.05))
   plt.show()
+  
 
 def grafik(x, y):
-    plt.plot(x, y,'b')  
+    plt.plot(x, y,'b')
+    plt.xlim([float(0), float(25)])
+    plt.ylim([float(0), float(25)])
     plt.xlabel('Days')  
-    plt.ylabel('Number of Infected People')  
+    plt.ylabel('Number of Infected People') 
+    plt.savefig("line.jpg")
+    #plt.subplot(1, 2, 2)
     plt.show()
+    
   
 # deklarasi
 individu = 200   
@@ -43,8 +50,8 @@ Nterinfeksi = int(individu * 5/100)
 Nsehat = individu - Nterinfeksi
 jumlahsakit = Nterinfeksi
 waktu_infeksi = [0 for i in range(individu)]
-arrX = numpy.zeros(200)
-arrY = numpy.zeros(200)
+arrX = np.zeros(200)
+arrY = np.zeros(200)
 arrX[1] = 1
 arrY[1] = Nterinfeksi
 kesehatan= []
@@ -192,8 +199,9 @@ while Nterinfeksi>0:
     arrY[hari] = Nterinfeksi
     
     #plot
-#    plot(x_sehat,x_infec,x_recover,y_sehat,y_infec, y_recover, Nterinfeksi,len(i_recover),hari+1)
-
-print(arrX)
-print(arrY)
+    plot(x_sehat,x_infec,x_recover,y_sehat,y_infec, y_recover, Nterinfeksi,len(i_recover),hari)
+    grafik(arrX,arrY)
+arrX = arrX[arrX != 0]
+arrY = arrY[arrY != 0]
+arrY = np.append(arrY, 0)
 grafik(arrX,arrY)
