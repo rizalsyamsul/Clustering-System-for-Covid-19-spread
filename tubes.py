@@ -4,7 +4,7 @@ Created on Tue Apr 27 13:18:36 2020
 
 @author: Sam
 """
-
+import numpy
 import random
 import matplotlib.pyplot as plt
 
@@ -42,9 +42,11 @@ waktupulih = 10
 Nterinfeksi = int(individu * 5/100)
 Nsehat = individu - Nterinfeksi
 jumlahsakit = Nterinfeksi
-imun_stat = [0 for i in range(individu)]
 waktu_infeksi = [0 for i in range(individu)]
-
+arrX = numpy.zeros(200)
+arrY = numpy.zeros(200)
+arrX[1] = 1
+arrY[1] = Nterinfeksi
 kesehatan= []
 #terinfeksi
 for i in range(Nterinfeksi):
@@ -89,7 +91,7 @@ while i < individu:
     y_sehat.append(y[0][i])
     i_sehat.append(i)
   i+=1
-plot(x_sehat,x_infec,x_recover,y_sehat,y_infec, y_recover, Nterinfeksi,0,1)
+#plot(x_sehat,x_infec,x_recover,y_sehat,y_infec, y_recover, Nterinfeksi,0,1)
 
 i = 0
 while Nterinfeksi>0: 
@@ -108,7 +110,7 @@ while Nterinfeksi>0:
           y[i+1].append(y_now)
         else: 
           #kanan
-          if rand <= 0.20:  
+          if rand <= 0.25:  
               if x_max <= x_now:
                   x[i+1].append(x_now-x_range)
                   y[i+1].append(y_now)
@@ -116,14 +118,14 @@ while Nterinfeksi>0:
                   x[i+1].append(x_now+1)
                   y[i+1].append(y_now)
           #bawah       
-          elif rand <= 0.40:
+          elif rand <= 0.50:
               if y_min >= y_now:
                   y[i+1].append(y_now+y_range)
                   x[i+1].append(x_now)
               else:
                   y[i+1].append(y_now-1)
                   x[i+1].append(x_now)
-          elif rand <= 0.60:
+          elif rand <= 0.75:
               if x_min >= x_now:
                   x[i+1].append(x_now+x_range)
                   y[i+1].append(y_now)
@@ -144,7 +146,6 @@ while Nterinfeksi>0:
               waktu_infeksi[j] +=1
             elif (waktu_infeksi[j] > waktupulih): 
               sembuh +=1
-              imun_stat[j] = 1
               kesehatan[j] = 0
               Nterinfeksi -= 1
               x_recover.append(x[i][j])
@@ -185,9 +186,14 @@ while Nterinfeksi>0:
               del y_sehat[temp]
 
     i+=1
-    hari = i
-    #plot
-    plot(x_sehat,x_infec,x_recover,y_sehat,y_infec, y_recover, Nterinfeksi,len(i_recover),hari+1)
+    hari = i+1
+
+    arrX[hari] = hari
+    arrY[hari] = Nterinfeksi
     
+    #plot
+#    plot(x_sehat,x_infec,x_recover,y_sehat,y_infec, y_recover, Nterinfeksi,len(i_recover),hari+1)
 
-
+print(arrX)
+print(arrY)
+grafik(arrX,arrY)
