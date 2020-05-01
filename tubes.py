@@ -187,8 +187,7 @@ while Nterinfeksi>0:
     i+=1
     hari = i
     #plot
-    plot(x_sehat,x_infec,x_recover,y_sehat,y_infec, y_recover, 
-           Nterinfeksi,len(i_recover),hari)
+    plot(x_sehat,x_infec,x_recover,y_sehat,y_infec, y_recover, Nterinfeksi,len(i_recover),hari+1)
     
 
 
